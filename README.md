@@ -4,6 +4,10 @@ A lightweight Windows GUI for fast bidirectional file transfer between Android d
 
 AndroidFastTransfer keeps the native `adb pull` / `adb push` transfer path while adding file browsing, multi-file transfer, real progress, elapsed time, transfer speed and ETA.
 
+## Status
+
+Current stable version: **v1.0.0**.
+
 ## Features
 
 - Android → Windows and Windows → Android transfer
@@ -75,6 +79,8 @@ MIT License. See [`LICENSE`](LICENSE).
 ## 中文簡介
 
 AndroidFastTransfer 是一套 Windows ↔ Android 的 ADB 高速雙向傳檔 GUI。
+
+目前穩定版本：**v1.0.0**。
 
 它保留原生 `adb pull / adb push` 傳輸核心，並提供手機檔案瀏覽、多檔案傳輸、真實進度、已用時間、速度與 ETA。傳輸採複製方式，不會自動刪除來源檔案。
 
