@@ -31,6 +31,7 @@ All notable public changes to AndroidFastTransfer will be documented in this fil
 - Added a repository privacy scanner and publication checklist.
 - Public source is rebased on the tested stable transfer implementation; no privacy-only runtime behavior changes are introduced.
 
+
 ### Notes
 
 - Transfer speed depends on the phone, USB controller, cable and host storage.
