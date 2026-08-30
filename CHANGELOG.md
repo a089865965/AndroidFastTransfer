@@ -2,7 +2,9 @@
 
 All notable changes to AndroidFastTransfer will be documented in this file.
 
-## [1.0.0]
+## [1.0.0] - 2026-08-30
+
+First stable public version.
 
 ### Added
 
