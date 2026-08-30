@@ -1,34 +1,22 @@
 # AndroidFastTransfer
 
-A lightweight Windows GUI for fast bidirectional file transfer between Android and PC using ADB.
+A lightweight Windows GUI for fast bidirectional file transfer between Android devices and PCs using ADB.
 
-AndroidFastTransfer keeps the native `adb pull` / `adb push` transfer path while adding a practical desktop interface, multi-file transfer, real progress monitoring, elapsed time, speed and ETA.
+AndroidFastTransfer keeps the native `adb pull` / `adb push` transfer path while adding file browsing, multi-file transfer, real progress, elapsed time, transfer speed and ETA.
 
 ## Features
 
 - Android → Windows and Windows → Android transfer
-- Copy semantics by default: source files are not deleted automatically
+- Copy semantics: source files are not deleted automatically
 - Android file browser starting from `/sdcard`
 - Multi-select files and folders
 - Real transfer progress, elapsed time, speed and ETA
-- Multi-file cumulative progress
-- GUI stays responsive during transfer
+- Cumulative progress across multiple files
+- Responsive GUI during transfer
 - No extra console window when launched as `.pyw`
 - Automatic detection of authorized ADB devices
-- Automatic download of Google’s official Android Platform Tools when ADB is unavailable
+- Automatic download of Google Android Platform Tools when ADB is unavailable
 - No third-party Python packages required
-
-## Why this project exists
-
-ADB is already fast and reliable, but raw command-line use is inconvenient for frequent large-file transfers. AndroidFastTransfer focuses on making the existing ADB transport usable as a daily GUI tool without replacing the transfer core.
-
-One real-world test transferred about 2.3 GB in roughly 8 seconds. This is an example from one device/cable/PC setup, not a guaranteed speed; actual throughput depends on USB mode, cable, device storage and host hardware.
-
-## Progress monitoring
-
-Some Windows / ADB combinations do not flush `adb -p` progress output to Python in real time. Earlier builds could therefore keep transferring successfully while the GUI remained at 0%.
-
-The current release keeps ADB as the transfer engine and adds independent progress monitoring. For pull operations it can observe the local destination size; for push operations it can query remote destination size at a low frequency. Elapsed time is updated independently from ADB stdout.
 
 ## Requirements
 
@@ -37,17 +25,23 @@ The current release keeps ADB as the transfer engine and adds independent progre
 - Android device with USB debugging enabled
 - USB connection authorized for ADB
 
-ADB / Platform Tools are handled by the application when needed.
-
 ## Usage
 
 1. Enable Developer options and USB debugging on the Android device.
 2. Connect the device by USB and approve the ADB authorization prompt.
 3. Launch `src/AndroidFastTransfer.pyw`.
-4. Choose transfer direction.
+4. Choose the transfer direction.
 5. Select the source files or folders.
-6. Choose the destination and start transfer.
-7. Confirm progress, speed and completion status in the GUI.
+6. Choose the destination.
+7. Start the transfer.
+
+If ADB is not available, AndroidFastTransfer can download Google Android Platform Tools automatically.
+
+## How progress works
+
+Some ADB builds do not continuously flush `adb -p` progress text when their output is redirected.
+
+AndroidFastTransfer therefore keeps ADB as the transfer engine while independently monitoring transferred data. For Android → PC transfers it can observe the destination size on the PC. For PC → Android transfers it can query the destination size on the device at a low frequency. This allows the GUI to continue showing useful progress without replacing the ADB transfer core.
 
 ## Repository layout
 
@@ -55,43 +49,22 @@ ADB / Platform Tools are handled by the application when needed.
 AndroidFastTransfer/
 ├─ src/
 │  └─ AndroidFastTransfer.pyw
-├─ docs/
-│  └─ PRIVACY.md
-├─ scripts/
-│  └─ privacy_scan.py
-├─ screenshots/
-│  └─ README.md
 ├─ README.md
 ├─ CHANGELOG.md
 ├─ SECURITY.md
 ├─ LICENSE
+├─ CHECKSUMS.txt
 ├─ requirements.txt
 └─ .gitignore
 ```
 
-## Privacy
+## Performance
 
-The repository is intentionally content-clean: the source and documentation contain no developer-specific name, email address, phone number, device serial, personal absolute path, private cloud link, API key, access token, or real personal media filename.
-
-Runtime values such as the connected ADB device serial, local paths and selected filenames are read from the user's own machine/device and are not embedded in the repository. Public screenshots and examples must use synthetic filenames only. See [`docs/PRIVACY.md`](docs/PRIVACY.md).
-
-A repository privacy scanner is included:
-
-```bash
-python scripts/privacy_scan.py .
-```
-
-The scan is a safety net, not a guarantee. Always review changes before making a repository public.
+Transfer speed depends on the phone, USB controller, cable and storage performance. A development test transferred about 2.3 GB in roughly 8 seconds, but this is not a guaranteed benchmark.
 
 ## Security
 
-This tool invokes ADB commands on a USB-debugging-authorized Android device. Only connect devices and computers you trust. See [`SECURITY.md`](SECURITY.md).
-
-## Status
-
-Public release candidate: **v1.0.0**
-
-The public source is rebased on the tested stable transfer implementation; privacy cleanup is limited to repository content and does not add untested runtime behavior.
+This tool executes ADB commands on an Android device authorized for USB debugging. Only connect devices and computers you trust. See [`SECURITY.md`](SECURITY.md).
 
 ## License
 
@@ -101,6 +74,16 @@ MIT License. See [`LICENSE`](LICENSE).
 
 ## 中文簡介
 
-AndroidFastTransfer 是一套 Windows ↔ Android 的 ADB 高速雙向傳檔 GUI。它保留 `adb pull / adb push` 的傳輸核心，補上檔案瀏覽、多檔傳輸、真實進度、已用時間、速度與 ETA。
+AndroidFastTransfer 是一套 Windows ↔ Android 的 ADB 高速雙向傳檔 GUI。
 
-公開版另外加入內容隱私保護整理：原始碼不硬編碼個人路徑、裝置序號、Email、電話、Token 或 API Key。執行時由 ADB 動態取得的裝置序號、使用者選取的路徑與檔名屬於本機執行資料，不會被寫入 repository；公開截圖、Log 或 Issue 前仍應再次去識別化。
+它保留原生 `adb pull / adb push` 傳輸核心，並提供手機檔案瀏覽、多檔案傳輸、真實進度、已用時間、速度與 ETA。傳輸採複製方式，不會自動刪除來源檔案。
+
+### 使用方式
+
+1. 在 Android 手機開啟「開發人員選項」與「USB 偵錯」。
+2. 使用 USB 連接電腦並允許 ADB 授權。
+3. 執行 `src/AndroidFastTransfer.pyw`。
+4. 選擇「手機 → 電腦」或「電腦 → 手機」。
+5. 選取檔案／資料夾與目的地後開始傳輸。
+
+若電腦尚未安裝 ADB，程式可自動下載 Google Android Platform Tools。
