@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Build / packaging
+build/
+dist/
+*.spec
+
+# Downloaded Android Platform Tools
+platform-tools/
+adb.exe
+AdbWinApi.dll
+AdbWinUsbApi.dll
+
+# Logs / temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+*.zip
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local testing / screenshots that may contain private data
+local_test_data/
+private_test_data/
+screenshots/private/
